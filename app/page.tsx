@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { countriesApi } from "./services";
-import { Card, Footer, Grid, Header } from "./components";
+import { Card, Grid } from "./components";
 
 type Country = {
   cca3: string;
@@ -42,9 +42,6 @@ const [ error, setError ] = useState<string | null>(null);
   if (error) return <div>{error}</div>;
 
   return (
-    <>
-    <Header />
-    <main className="flex-1">
       <Grid>
       {countries.map(({ cca3, flags, name, capital, region, population }, index ) => {
         const { svg: flag } = flags ?? {};
@@ -66,8 +63,5 @@ const [ error, setError ] = useState<string | null>(null);
       )}
     )}
       </Grid>
-    </main>
-    <Footer />
-    </>
   );
 }
