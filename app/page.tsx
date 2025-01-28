@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { countriesApi } from "./services";
 import { Card, Footer, Grid, Header } from "./components";
 
@@ -51,6 +52,7 @@ const [ error, setError ] = useState<string | null>(null);
         const [ capitalName ] = capital ?? {};
 
       return(
+      <Link key={cca3} href={`/country/${cca3}`}>
       <Card
           key={cca3}
           index={index}
@@ -59,7 +61,9 @@ const [ error, setError ] = useState<string | null>(null);
           capital={capitalName}
           region={region}
           population={population}
-      />)}
+      />
+      </Link>
+      )}
     )}
       </Grid>
     </main>
