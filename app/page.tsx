@@ -41,9 +41,11 @@ const [ error, setError ] = useState<string | null>(null);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
+  const sortedCoutries = countries.sort((a, b) => a.name.common.localeCompare(b.name.common, "en-US")); 
+
   return (
       <Grid>
-      {countries.map(({ cca3, flags, name, capital, region, population }, index ) => {
+      {sortedCoutries.map(({ cca3, flags, name, capital, region, population }, index ) => {
         const { svg: flag } = flags ?? {};
         const { common: countryName } = name ?? {};
         const [ capitalName ] = capital ?? {};
