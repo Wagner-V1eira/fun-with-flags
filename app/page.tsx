@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { countriesApi } from "./services";
-import { Card, Grid } from "./components";
+import { Card, Grid, Search } from "./components";
+
 
 type Country = {
   cca3: string;
@@ -20,6 +21,7 @@ type Country = {
 
 export default function Home() {
 const [ countries, setCountries ] = useState<Country[]>([]);
+const [ search, setSearch ] = useState('');
 const [ loading, setLoading ] = useState(true);
 const [ error, setError ] = useState<string | null>(null);
   
@@ -43,9 +45,19 @@ const [ error, setError ] = useState<string | null>(null);
 
   const sortedCoutries = countries.sort((a, b) => a.name.common.localeCompare(b.name.common, "en-US")); 
 
+  const filteredCountries = sortedCoutries.filter(({ name }) => 
+    name.common.toLowerCase().includes(search.toLowerCase()));
+
   return (
+    <>
+    <div className="mb-8">
+      <Search count={filteredCountries.length}
+      search={search}
+      setSearch={setSearch}
+      />
+    </div>
       <Grid>
-      {sortedCoutries.map(({ cca3, flags, name, capital, region, population }, index ) => {
+      {filteredCountries.map(({ cca3, flags, name, capital, region, population }, index ) => {
         const { svg: flag } = flags ?? {};
         const { common: countryName } = name ?? {};
         const [ capitalName ] = capital ?? {};
@@ -65,5 +77,6 @@ const [ error, setError ] = useState<string | null>(null);
       )}
     )}
       </Grid>
+    </>
   );
 }
