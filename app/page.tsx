@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { countriesApi } from "./services";
-import { Card, Grid, Search, Select } from "./components";
+import { Card, Error, Grid, Loading, Search, Select } from "./components";
 
 
 type Country = {
@@ -41,8 +41,8 @@ const [ error, setError ] = useState<string | null>(null);
     fetchCountries();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <Loading text="Discovering countries"/>;
+  if (error) return <Error text={error}/>;
   
   const regions = ["All regions", ...new Set (countries.map(({ region }) => region))];
 
